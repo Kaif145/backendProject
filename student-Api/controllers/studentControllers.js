@@ -35,4 +35,30 @@ async function handleAddSutdent(req, res) {
   }
 }
 
-module.exports = { handleAddSutdent };
+async function handleGetAllStudents(req,res) {
+  try{
+    const allStudent = await student.find();
+    if(!allStudent){
+      res.status(404).json({"message" : "students data not founded"});
+    }
+    res.status(200).json({"AllStudent" : allStudent});
+  }catch(err){
+    console.log("here is the err",err);
+    res.status(500).json({err});
+  }
+}
+
+async function handleStudentById(req,res) {
+  try{
+    const id = req.params.id;
+    const studentId = await student.findById(id);
+    if(!studentId){
+      res.status(401).json({"messages":"truble to get student by id "});
+    }
+    res.status(200).json({"studentId":studentId});
+  }catch(err){
+     res.status(500).json({err})
+  }
+}
+
+module.exports = { handleAddSutdent , handleGetAllStudents,handleStudentById};
