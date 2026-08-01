@@ -28,7 +28,7 @@ async function handleAddSutdent(req, res) {
       return res.status(401).json({
         "err": "err form while create" });
     }
-    res.status(201).json({ "student": studentData });
+    res.status(201).json({"messages":"sutdents is created", "Student": studentData });
   } catch (error) {
     console.log(error);
    
