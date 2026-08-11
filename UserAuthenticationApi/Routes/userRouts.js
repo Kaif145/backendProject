@@ -1,8 +1,9 @@
 import express from "express";
-import registerUser from "../controller/severBrain.js";
+import {registerUser, login} from "../controller/severBrain.js";
 
 const Route = express.Router();
 
 Route.post("/create", registerUser);
+Route.post("/login",login);
 
 export default Route;

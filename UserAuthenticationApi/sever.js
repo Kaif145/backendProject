@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 const PORT = 3000;
-import register from './Routes/userRouts.js'
+import routes from './Routes/userRouts.js'
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -33,11 +33,9 @@ function connectingDB() {
     });
 }
 connectingDB();
-app.use("/api",register);
-
+app.use("/api",routes);
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 
-    
 });
