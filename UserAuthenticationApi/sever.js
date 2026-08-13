@@ -1,8 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose';
 const PORT = 3000;
-import register from './Routes/userRouts.js'
+import routes from './Routes/userRouts.js'
 const app = express();
+
+import dotenv from "dotenv";
+
+dotenv.config();
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -17,10 +21,10 @@ app.use(express.json());
 // Logout
 // Protected Profile Route
 // APIs
-// POST /register
-// POST /login
-// POST /logout
-// GET  /profile
+// POST /register done 
+// POST /login   panding
+// POST /logout  panding
+// GET  /profile panding
 
 function connectingDB() {
   mongoose
@@ -33,9 +37,9 @@ function connectingDB() {
     });
 }
 connectingDB();
-app.use("/api",register);
-
+app.use("/api",routes);
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
+
 });
