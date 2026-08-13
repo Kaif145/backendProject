@@ -22,9 +22,9 @@ app.use(express.json());
 // Protected Profile Route
 // APIs
 // POST /register done 
-// POST /login   panding
+// POST /login   done
 // POST /logout  panding
-// GET  /profile panding
+// GET  /profile done
 
 function connectingDB() {
   mongoose
@@ -41,5 +41,4 @@ app.use("/api",routes);
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
-
 });
