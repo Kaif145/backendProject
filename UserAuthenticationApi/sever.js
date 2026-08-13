@@ -4,6 +4,10 @@ const PORT = 3000;
 import routes from './Routes/userRouts.js'
 const app = express();
 
+import dotenv from "dotenv";
+
+dotenv.config();
+
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
