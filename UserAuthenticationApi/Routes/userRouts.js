@@ -1,5 +1,5 @@
 import express from "express";
-import {registerUser, login, profile} from "../controller/severBrain.js";
+import {registerUser, login, profile,logout} from "../controller/severBrain.js";
 import {authenticateUser} from '../middleware/authMiddleware.js'
 
 const Route = express.Router();
@@ -7,5 +7,6 @@ const Route = express.Router();
 Route.post("/create", registerUser);
 Route.get("/login",login);
 Route.get("/profile",authenticateUser,profile);
+Route.get("/logout",logout);
 
 export default Route;

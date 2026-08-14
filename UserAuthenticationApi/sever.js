@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
 const PORT = 3000;
 import routes from './Routes/userRouts.js'
 const app = express();
@@ -9,8 +10,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 app.use(express.urlencoded({ extended: true }));
-
 app.use(express.json());
+
+app.use(cookieParser());
+
 
 // Features
 // User Registration
