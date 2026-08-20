@@ -16,17 +16,17 @@ app.use(cookieParser());
 
 
 // Features
-// User Registration
-// User Login
-// Password Hashing (bcrypt)
-// JWT Authentication
-// Cookies
-// Logout
-// Protected Profile Route
-// APIs
+// User Registration  done
+// User Login done
+// Password Hashing (bcrypt) done
+// JWT Authentication done
+// Cookies done
+// Logout done
+// Protected Profile Route done
+// APIs done
 // POST /register done 
 // POST /login   done
-// POST /logout  panding
+// POST /logout  done
 // GET  /profile done
 
 function connectingDB() {
