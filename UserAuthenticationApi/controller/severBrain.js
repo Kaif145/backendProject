@@ -50,14 +50,55 @@ export async function login(req, res) {
     }
 
     const token = jwt.sign(
-        {user: findUsedByName._id},
+        {userId: findUsedByName._id},
         process.env.JWT_SECRET,
         {expiresIn: "1h"}
     );
-     res.json({ messeges: "login successfuly", user: findUsedByName, token : token});
-    console.log(findUsedByName);
+    res.cookie("token", token, {
+  httpOnly: true,
+  secure: false,
+  sameSite: "lax",
+  maxAge: 60 * 60 * 1000
+});
 
+return res.json({
+  message: "Login successful"
+});
+    
   } catch (err) {
     return res.json(err);
+  }
+}
+
+export async function profile(req, res) {
+  try {
+    const user = await User.findById(req.userId).select("-password");
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found"
+      });
+    }
+    console.log(user);
+    return res.status(200).json({
+      user
+    });
+    
+
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message
+    });
+  }
+}
+
+export async function logout(req,res) {
+  try{
+    res.clearCookie("token");
+    return res.json({
+      message : "logout successful"
+    });
+  }catch(err){
+    res.status(501).json(err);
   }
 }

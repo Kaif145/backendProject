@@ -1,23 +1,24 @@
 import jwt from "jsonwebtoken";
-export function authenticateUser(req, res,next){
-    try{
-        const authHeader = req.headers.authorizatoin;
-        if(!authHeader) {
-            return res.status(401).json({
-                message: "no  token proied"
-            });
-        }
-        const token = authHeader.split(" ")[1];
-        const decond =jwt.verify(
-            token,
+export function authenticateUser(req, res, next) {
+  try {
+    const token = req.cookies.token;
 
-            process.env.JWT_SECRET
-        );
-        req.userId = decond.userId;
-        next();
-    } catch (err) {
+    if (!token) {
+      return res.status(401).json({
+        message: "No token provided",
+      });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("Deconded JWT : ", decoded);
+    req.userId = decoded.userId;
+
+    next();
+  } catch (err) {
+    console.log(err);
+
     return res.status(401).json({
-      message: "Invalid or expired token"
+      message: "Invalid or expired token",
     });
   }
 }
