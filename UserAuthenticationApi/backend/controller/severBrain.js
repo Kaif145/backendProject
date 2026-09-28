@@ -1,6 +1,6 @@
 import User from "../module/userShecma.js";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
 export async function registerUser(req, res) {
   try {
@@ -50,34 +50,33 @@ export async function login(req, res) {
     }
 
     const accessToken = jwt.sign(
-        {userId: findUsedByName._id},
-        process.env.JWT_SECRET,
-        {expiresIn: "15m"}
+      { userId: findUsedByName._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "15m" },
     );
     const refreshToken = jwt.sign(
-      {userId : findUsedByName._id},
+      { userId: findUsedByName._id },
       process.env.JWT_REFRESH_SECRET,
-      {expiresIn: "7d"}
-    )
+      { expiresIn: "7d" },
+    );
 
     res.cookie("accessToken", accessToken, {
-  httpOnly: true,
-  secure: false,
-  sameSite: "lax",
-  maxAge: 15 * 50 * 1000
-});
- 
-  res.cookie("refreshToken", refreshToken ,{
-    httpOnly:true,
-    secure: false,
-    sameSite: "lax",
-    maxAge: 7*24*60*60*1000
-  })
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 15 * 50 * 1000,
+    });
 
-return res.json({
-  message: "Login successful"
-});
-    
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    return res.json({
+      message: "Login successful",
+    });
   } catch (err) {
     return res.json(err);
     console.log(err);
@@ -90,62 +89,57 @@ export async function profile(req, res) {
 
     if (!user) {
       return res.status(404).json({
-        message: "User not found"
+        message: "User not found",
       });
     }
-    console.log(user);
+    // console.log(user);
     return res.status(200).json({
-      user
+      user,
     });
-    
-
   } catch (err) {
     return res.status(500).json({
-      message: err.message
+      message: err.message,
     });
   }
 }
 
-export async function logout(req,res) {
-  try{
+export async function logout(req, res) {
+  try {
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
     return res.json({
-      message : "logout successful"
+      message: "logout successful",
     });
-  }catch(err){
+  } catch (err) {
     res.status(501).json(err);
   }
 }
 
-export async function refreshToken(req,res) {
-  try{
+export async function refreshToken(req, res) {
+  try {
     const refreshToken = req.cookie.refreshToken;
 
-    if(!refreshToken){
-      return res.status(401).json({message: "refresh token not found"});
+    if (!refreshToken) {
+      return res.status(401).json({ message: "refresh token not found" });
     }
-    const decoded = jwt.verify(
-      refreshToken,
-      process.env.JWT_REFRESH_SECRET
-    );
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
 
     const newAccessToken = jwt.sign(
-      {userId :  decoded.userId},
+      { userId: decoded.userId },
       process.env.JWT_SECRET,
-      {expiresIn: "15m"}
+      { expiresIn: "15m" },
     );
 
-    res.cookie("accessToken",newAccessToken,{
+    res.cookie("accessToken", newAccessToken, {
       httpOnly: true,
-      secure:false,
-      sameSite:"lax",
-      maxAge:15*60*1000
+      secure: false,
+      sameSite: "lax",
+      maxAge: 15 * 60 * 1000,
     });
-    return res.status(200).json({message:"Access token refreshed"});
-  }catch(err){
+    return res.status(200).json({ message: "Access token refreshed" });
+  } catch (err) {
     return res.status(401).json({
-      message:"Inviled or expired refresh token"
+      message: "Inviled or expired refresh token",
     });
   }
 }
