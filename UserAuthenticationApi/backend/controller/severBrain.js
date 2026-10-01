@@ -143,3 +143,12 @@ export async function refreshToken(req, res) {
     });
   }
 }
+
+export async function getData(req,res) {
+  try{
+    return res.json("helllo i'm from backend");
+  }catch(err){
+    console.log(err);
+    return res.json("got some error while featching  the data from the backed ")
+  }
+}
