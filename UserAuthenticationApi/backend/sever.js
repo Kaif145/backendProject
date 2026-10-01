@@ -1,18 +1,29 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import cookieParser from 'cookie-parser';
+import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 const PORT = 3000;
-import routes from './Routes/userRouts.js'
+import routes from "./Routes/userRouts.js";
+
 const app = express();
 
 import dotenv from "dotenv";
 
 dotenv.config();
 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(cookieParser());
+
+
 
 
 // Features
@@ -24,7 +35,7 @@ app.use(cookieParser());
 // Logout done
 // Protected Profile Route done
 // APIs done
-// POST /register done 
+// POST /register done
 // POST /login   done
 // POST /logout  done
 // GET  /profile done
@@ -40,8 +51,8 @@ function connectingDB() {
     });
 }
 connectingDB();
-app.use("/api",routes);
+app.use("/api", routes);
 
 app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`);
+  console.log(`Server started on port ${PORT}`);
 });
