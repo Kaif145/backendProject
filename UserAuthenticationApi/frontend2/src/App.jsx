@@ -1,24 +1,21 @@
-import {useState} from "react"
+import { Routes, Route, Navigate } from "react-router";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import About from "./pages/About";
+import Profile from "./pages/Profile";
 
+export default function App() {
 
-export function App(){
-  const [name,setName] = useState("");
-  const [email,setEmail] = useState("");
-  return(
-    <div>
-      <h1>Hello, {name}</h1>
-      <input type="text" 
-      placeholder="Enter Your name"
-      value={name}
-      onChange={(event)=>setName(event.target.value)}
-      />
-      <h1>Your Email : {email}</h1>
-      <input type="email"
-      placeholder="Enter YOur Email"
-      value={email}
-      onChange={(e)=>setEmail(e.target.value)}
-       />
-    </div>
-  )
+  return (
+    <>
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="*" element={<h1>Page not found</h1>} />
+    </Routes>
+    </>
+  );
 }
-export default App;
