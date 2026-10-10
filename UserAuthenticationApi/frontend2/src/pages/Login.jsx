@@ -20,6 +20,7 @@ export default function Login() {
     try {
       const response = await fetch("http://localhost:3000/api/login", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -35,7 +36,7 @@ export default function Login() {
 
       setData(result);
       setPassword("");
-      navigate("/about");
+      navigate("/profile");
     } catch (err) {
       setErr(err.message);
     } finally {
