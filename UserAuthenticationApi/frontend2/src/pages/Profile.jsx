@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router";
-
+import { Link} from "react-router";
+import Logout from "./Logout";
 export default function Profile() {
   const [data, setData] = useState("");
   const [loading, setLoading] = useState(true);
@@ -60,6 +60,7 @@ export default function Profile() {
         <p>Email: {data.email}</p>
         <p>Age: {data.age ?? "Not provided"}</p>
         <p>Bio: {data.bio || "No bio added yet."}</p>
+        <Logout />
       </div>
     </>
   );
