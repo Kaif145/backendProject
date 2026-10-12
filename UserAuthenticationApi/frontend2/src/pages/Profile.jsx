@@ -1,21 +1,27 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link} from "react-router";
+import { Link, useNavigate } from "react-router";
 import Logout from "./Logout";
 export default function Profile() {
   const [data, setData] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+  const navigate = useNavigate();
   useEffect(() => {
     const controller = new AbortController();
-    async function fetchingProfile(req, res) {
+    async function fetchingProfile() {
       try {
         const response = await fetch("http://localhost:3000/api/profile", {
           method: "GET",
           credentials: "include",
           signal: controller.signal,
         });
+
+        if (response.status === 401) {
+          navigate("/login", { replace: true });
+          return;
+        }
+
         const result = await response.json();
         if (!response.ok) {
           throw new Error(result.message || "Could not  load profile");
@@ -34,7 +40,7 @@ export default function Profile() {
     }
     fetchingProfile();
     return () => controller.abort();
-  }, []);
+  }, [navigate]);
 
   if (loading) {
     return <p>Loading your profile...</p>;
